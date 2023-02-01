@@ -82,17 +82,15 @@ export const VDataTable = defineComponent({
     const { filteredItems } = useFilter<DataTableItem>(props, items, toRef(props, 'search'), { filterKeys })
 
     const { sortBy } = createSort(props)
-    const { sortByWithGroups, opened, extractRows } = createGroupBy(props, groupBy, sortBy)
-
+    const { sortByWithGroups, opened } = createGroupBy(props, groupBy, sortBy)
     const { sortedItems } = useSortedItems(props, filteredItems, sortByWithGroups)
-    const { flatItems } = useGroupedItems(sortedItems, groupBy, opened)
 
-    const { page, itemsPerPage, startIndex, stopIndex, pageCount } = createPagination(props, flatItems)
-    const { paginatedItems } = usePaginatedItems(flatItems, startIndex, stopIndex, itemsPerPage)
+    const { page, itemsPerPage, startIndex, stopIndex, pageCount } = createPagination(props, sortedItems)
+    const { paginatedItems } = usePaginatedItems(sortedItems, startIndex, stopIndex, itemsPerPage)
 
-    const paginatedItemsWithoutGroups = computed(() => extractRows(paginatedItems.value))
+    const { flatItems } = useGroupedItems(paginatedItems, groupBy, opened)
 
-    createSelection(props, paginatedItemsWithoutGroups)
+    createSelection(props, items)
 
     createExpanded(props)
 
@@ -143,7 +141,7 @@ export const VDataTable = defineComponent({
               <tbody>
                 { slots.body ? slots.body() : (
                   <VDataTableRows
-                    items={ paginatedItems.value }
+                    items={ flatItems.value }
                     onClick:row={ (event, value) => emit('click:row', event, value) }
                     v-slots={ slots }
                   />

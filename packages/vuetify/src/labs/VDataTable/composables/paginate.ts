@@ -7,6 +7,8 @@ import { clamp, propsFactory } from '@/util'
 
 // Types
 import type { InjectionKey, Ref } from 'vue'
+import type { InternalItem } from '@/composables/items'
+import type { DataTableItem } from '../types'
 
 export const makeDataTablePaginateProps = propsFactory({
   page: {
@@ -99,8 +101,8 @@ export function usePagination () {
   return data
 }
 
-export function usePaginatedItems (
-  items: Ref<any[]>,
+export function usePaginatedItems <T extends InternalItem = DataTableItem> (
+  items: Ref<T[]>,
   startIndex: Ref<number>,
   stopIndex: Ref<number>,
   itemsPerPage: Ref<number>

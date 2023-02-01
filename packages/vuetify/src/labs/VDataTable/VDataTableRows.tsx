@@ -14,7 +14,7 @@ import { defineComponent, useRender } from '@/util'
 
 // Types
 import type { PropType } from 'vue'
-import type { DataTableItem, InternalDataTableItem } from './types'
+import type { DataTableItem, GroupHeaderItem } from './types'
 
 export const VDataTableRows = defineComponent({
   name: 'VDataTableRows',
@@ -27,7 +27,7 @@ export const VDataTableRows = defineComponent({
     },
     hideNoData: Boolean,
     items: {
-      type: Array as PropType<InternalDataTableItem[]>,
+      type: Array as PropType<(DataTableItem | GroupHeaderItem)[]>,
       default: () => ([]),
     },
     noDataText: {

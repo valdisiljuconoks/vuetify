@@ -64,14 +64,12 @@ export const VDataTableVirtual = defineComponent({
     const { filteredItems } = useFilter<DataTableItem>(props, items, toRef(props, 'search'), { filterKeys })
 
     const { sortBy } = createSort(props)
-    const { sortByWithGroups, opened, extractRows } = createGroupBy(props, groupBy, sortBy)
+    const { sortByWithGroups, opened } = createGroupBy(props, groupBy, sortBy)
 
     const { sortedItems } = useSortedItems(props, filteredItems, sortByWithGroups)
     const { flatItems } = useGroupedItems(sortedItems, groupBy, opened)
 
-    const allRows = computed(() => extractRows(flatItems.value))
-
-    createSelection(props, allRows)
+    createSelection(props, items)
     createExpanded(props)
 
     const {
