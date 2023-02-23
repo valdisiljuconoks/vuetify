@@ -53,6 +53,7 @@
   },
   "component": "Component",
   "components": "Components",
+  "concepts": "Common concepts",
   "contents": "Contents",
   "contribute": {
     "edit-page": "Edit this page on {url}",
