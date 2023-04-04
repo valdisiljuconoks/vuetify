@@ -31,6 +31,7 @@ import type {
   FunctionalComponent,
   MethodOptions,
   ObjectEmitsOptions,
+  SlotsType,
   VNode,
   VNodeChild,
   VNodeProps,
@@ -52,6 +53,7 @@ export function defineComponent<
   Extends extends ComponentOptionsMixin = ComponentOptionsMixin,
   E extends EmitsOptions = {},
   EE extends string = string,
+  S extends SlotsType = {},
   I extends {} = {},
   II extends string = string
 >(
@@ -65,6 +67,7 @@ export function defineComponent<
     Extends,
     E,
     EE,
+    S,
     I,
     II
   >
@@ -81,6 +84,7 @@ export function defineComponent<
   Extends extends ComponentOptionsMixin = ComponentOptionsMixin,
   E extends EmitsOptions = {},
   EE extends string = string,
+  S extends SlotsType = {},
   I extends {} = {},
   II extends string = string
 >(
@@ -94,6 +98,7 @@ export function defineComponent<
     Extends,
     E,
     EE,
+    S,
     I,
     II
   >
@@ -195,6 +200,7 @@ type DefineComponentWithGenericProps<T extends (new () => {
   Extends extends ComponentOptionsMixin = ComponentOptionsMixin,
   E extends EmitsOptions = Record<string, any>,
   EE extends string = string,
+  S extends SlotsType = {},
   I = InstanceType<T>,
   Base = DefineComponent<
     I extends Record<'$props', any>
@@ -207,7 +213,8 @@ type DefineComponentWithGenericProps<T extends (new () => {
     Mixin,
     Extends,
     E extends any[] ? E : I extends Record<'$props', any> ? Omit<E, ToListeners<keyof I['$props']>> : E,
-    EE
+    EE,
+    S
   >
 >(
   options: ComponentOptionsWithObjectProps<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE>
@@ -223,6 +230,7 @@ type DefineComponentWithSlots<Slots extends Record<string, any[]> | Record<strin
   Extends extends ComponentOptionsMixin = ComponentOptionsMixin,
   E extends EmitsOptions = Record<string, any>,
   EE extends string = string,
+  S extends SlotsType = {},
 >(
   options: ComponentOptionsWithObjectProps<PropsOptions, RawBindings, D, C, M, Mixin, Extends, E, EE>
 ) => DefineComponent<
@@ -235,6 +243,7 @@ type DefineComponentWithSlots<Slots extends Record<string, any[]> | Record<strin
   Extends,
   E,
   EE,
+  S,
   PublicProps,
   ExtractPropTypes<PropsOptions> & SlotsToProps<Slots> & ({} extends E ? {} : EmitsToProps<E>),
   ExtractDefaultPropTypes<PropsOptions>
